@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC  -g -ggdb   -shared -Wl,-soname,libudasample.so -o build/libudasample.so CMakeFiles/udasample.dir/uda-sample.cc.o CMakeFiles/udasample.dir/hyperloglog-uda.cc.o CMakeFiles/udasample.dir/variance-uda.cc.o -lImpalaUdf 

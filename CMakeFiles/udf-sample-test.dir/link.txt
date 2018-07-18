@@ -1,0 +1,1 @@
+/usr/bin/c++    -g -ggdb    CMakeFiles/udf-sample-test.dir/udf-sample-test.cc.o  -o build/udf-sample-test -rdynamic build/libudfsample.so -lImpalaUdf -Wl,-rpath,/data/jun.zhang/my-udf/over/impala-udf-samples/build 

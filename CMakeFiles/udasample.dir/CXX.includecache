@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.cc
+uda-sample.h
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
+assert.h
+-
+sstream
+-
+iostream
+-
+vector
+-
+
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
+impala_udf/udf.h
+-
+
+/data/jun.zhang/my-udf/over/impala-udf-samples/variance-uda.cc
+assert.h
+-
+math.h
+-
+algorithm
+-
+sstream
+-
+iostream
+-
+impala_udf/udf.h
+-
+uda-sample.h
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
+

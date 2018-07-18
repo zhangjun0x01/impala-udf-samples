@@ -1,0 +1,4 @@
+/data/jun.zhang/my-udf/over/impala-udf-samples/CMakeFiles/uda-sample-test.dir
+/data/jun.zhang/my-udf/over/impala-udf-samples/CMakeFiles/udasample.dir
+/data/jun.zhang/my-udf/over/impala-udf-samples/CMakeFiles/udf-sample-test.dir
+/data/jun.zhang/my-udf/over/impala-udf-samples/CMakeFiles/udfsample.dir

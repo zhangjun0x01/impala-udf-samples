@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC  -g -ggdb   -shared -Wl,-soname,libudfsample.so -o build/libudfsample.so CMakeFiles/udfsample.dir/udf-sample.cc.o -lImpalaUdf 

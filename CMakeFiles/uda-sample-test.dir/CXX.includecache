@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample-test.cc
+iostream
+-
+math.h
+-
+impala_udf/uda-test-harness.h
+-
+uda-sample.h
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
+
+/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
+impala_udf/udf.h
+-
+
