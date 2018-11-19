@@ -37,6 +37,13 @@ StringVal ToStringVal<DoubleVal>(FunctionContext* context, const DoubleVal& val)
   return ToStringVal(context, val.val);
 }
 
+template <>
+StringVal ToStringVal<IntVal>(FunctionContext* context, const IntVal& val) {
+  if (val.is_null) return StringVal::null();
+  return ToStringVal(context, val.val);
+}  
+
+
 // ---------------------------------------------------------------------------
 // This is a sample of implementing a COUNT aggregate function.
 // ---------------------------------------------------------------------------
@@ -720,4 +727,82 @@ StringVal FindPreStepFinalize(FunctionContext* context, const StringVal& val){
 
 
 
- 
+
+
+////////////////////////////
+//
+// funnel with window
+//
+//
+/////////////////////////
+
+struct FunnelWindowStruct {
+  int step;
+  int64_t datestamp;
+};
+
+void FunnelWindowInit(FunctionContext* context, StringVal* val){
+  val->is_null = false;
+  val->len = sizeof(FunnelWindowStruct);
+  val->ptr = context->Allocate(val->len);
+  memset(val->ptr, 0, val->len);
+  //AllocBuffer(context, val, sizeof(FunnelWindowStruct));
+  //FunnelWindowStruct* state =reinterpret_cast<FunnelWindowStruct*>(val->ptr);
+  //state->step = 0;
+}
+
+//*******************************
+//
+//查询窗口期是${day}天，窗口期的第一天是${beginDay}的漏斗转换。
+//漏斗的第一步必须发生在窗口期的第一天,其他步骤没有限制,在窗口期内即可
+//
+//
+//
+void FunnelWindowUpdate(FunctionContext* context,const IntVal& beginDay ,const IntVal& day, const BigIntVal& datestamp,const BigIntVal& interval,const IntVal& step, StringVal* val){
+	FunnelWindowStruct* fws = reinterpret_cast<FunnelWindowStruct*>(val->ptr);
+	//cout << "update ,the step is " << step.val << " fws->step is " << fws->step << " datestamp is " << datestamp.val <<  " fws->datestamp is  " << fws->datestamp <<  endl;
+	//漏斗的第一步必须发生在窗口期的第一天，如果还没有走到第二步的时候走了多个第一步，取最后一个
+    	if(beginDay.val == day.val && step.val == 1 && fws->step <=1 ){
+		fws->step = 1;
+		fws->datestamp = datestamp.val;
+		//cout << "add first step " << endl;
+	}	
+
+	//if(step.val > 1){
+	//	cout << "step is " << step.val << " datestamp.val - fws->datestamp " << (datestamp.val - fws->datestamp)<<" interval.val " << interval.val << " fws->step " << fws->step << endl;
+	//}
+        if(step.val > 1 && (datestamp.val - fws->datestamp ) <= interval.val && (fws->step+1) == step.val) {
+		fws->step = fws->step + 1;	
+		//std::cout << "update step is " << fws->step << endl;
+	}	
+
+}
+
+void FunnelWindowMerge(FunctionContext* context, const StringVal& src, StringVal* dst){
+  const FunnelWindowStruct* src_avg = reinterpret_cast<const FunnelWindowStruct*>(src.ptr);
+  FunnelWindowStruct* dst_avg = reinterpret_cast<FunnelWindowStruct*>(dst->ptr);
+  if(dst_avg->step > src_avg->step ){
+	dst_avg->step = src_avg->step;
+  }
+
+}
+
+StringVal FunnelWindowSerialize(FunctionContext* context, const StringVal& val){
+  assert(!val.is_null);
+  StringVal result(context, val.len);
+  memcpy(result.ptr, val.ptr, val.len);
+  context->Free(val.ptr);
+  return result;
+}
+
+StringVal FunnelWindowFinalize(FunctionContext* context, const StringVal& val){
+  assert(!val.is_null);
+  assert(val.len == sizeof(FunnelWindowStruct));
+  FunnelWindowStruct* avg = reinterpret_cast<FunnelWindowStruct*>(val.ptr);
+  //cout << "FunnelWindowFinalize final step " << avg->step << endl;
+  StringVal result = ToStringVal(context,avg->step);
+  context->Free(val.ptr);
+  return result;
+
+}
+

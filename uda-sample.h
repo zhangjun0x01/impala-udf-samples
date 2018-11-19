@@ -155,6 +155,11 @@ void FindPreStepMerge(FunctionContext* context, const StringVal& src, StringVal*
 StringVal FindPreStepFinalize(FunctionContext* context, const StringVal& val);
 
 
-
+// funnel with window
+void FunnelWindowInit(FunctionContext* context, StringVal* val);
+void FunnelWindowUpdate(FunctionContext* context,const IntVal& beginDay ,const IntVal& day, const BigIntVal& datestamp,const BigIntVal& interval,const IntVal& step, StringVal* val);
+void FunnelWindowMerge(FunctionContext* context, const StringVal& src, StringVal* dst);
+StringVal FunnelWindowSerialize(FunctionContext* context, const StringVal& val);
+StringVal FunnelWindowFinalize(FunctionContext* context, const StringVal& val);
 
 #endif

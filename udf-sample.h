@@ -81,4 +81,8 @@ void ReturnConstantArgPrepare(
 void ReturnConstantArgClose(
     FunctionContext* context, FunctionContext::FunctionStateScope scope);
 
+
+IntVal FunnelWindowCast(FunctionContext* context, const StringVal& input);
+
+
 #endif

@@ -154,7 +154,6 @@ struct FindNextStepStruct{
 IntVal FindNextNameSpace(FunctionContext* context, const StringVal& input) {
      FindNextStepStruct* dst = reinterpret_cast<FindNextStepStruct*>(input.ptr);
      return  IntVal(dst->name_space_key);
-
 }
 
 IntVal Mycast(FunctionContext* context, const StringVal& input){
@@ -179,5 +178,17 @@ void ReturnConstantArgClose(
   }
 }
 
+
+
+
+struct FunnelWindowStruct {
+  int step;
+  int64_t datestamp;
+};
+
+IntVal FunnelWindowCast(FunctionContext* context, const StringVal& input) {
+     FunnelWindowStruct* dst = reinterpret_cast<FunnelWindowStruct*>(input.ptr);
+     return  IntVal(dst->step);
+}
 
 

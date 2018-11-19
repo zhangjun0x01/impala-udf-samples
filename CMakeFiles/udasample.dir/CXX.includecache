@@ -22,19 +22,3 @@ vector
 impala_udf/udf.h
 -
 
-/data/jun.zhang/my-udf/over/impala-udf-samples/variance-uda.cc
-assert.h
--
-math.h
--
-algorithm
--
-sstream
--
-iostream
--
-impala_udf/udf.h
--
-uda-sample.h
-/data/jun.zhang/my-udf/over/impala-udf-samples/uda-sample.h
-
